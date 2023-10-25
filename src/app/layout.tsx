@@ -1,32 +1,37 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import { classNames } from '@/lib/utils'
-import Navbar from '@/components/Navbar'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { classNames } from "@/lib/utils";
+import Navbar from "@/components/Navbar";
+import Providers from "@/components/Providers";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'SmartBag',
-  description: 'AI service that allows you to organise and sort your digital life',
-}
+  title: "SmartBag",
+  description:
+    "AI service that allows you to organise and sort your digital life",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className='light'>
+    <html lang="en" className="light">
+      <Providers>
         <body
           className={classNames(
-            'min-h-screen font-sans antialiased grainy',
+            "min-h-screen font-sans antialiased grainy",
             inter.className
-          )}>
+          )}
+        >
           {/* <Toaster />*/}
           <Navbar />
           {children}
         </body>
+      </Providers>
     </html>
-  )
+  );
 }

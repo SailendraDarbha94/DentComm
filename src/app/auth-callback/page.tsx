@@ -1,3 +1,5 @@
+"use client"
+
 import { useRouter, useSearchParams } from 'next/navigation'
 import { trpc } from '../_trpc/client'
 import { Loader2 } from 'lucide-react'
@@ -29,9 +31,10 @@ const Page = () => {
       <div className='flex flex-col items-center gap-2'>
         <Loader2 className='h-8 w-8 animate-spin text-zinc-800' />
         <h3 className='font-semibold text-xl'>
-          Setting up your account...
+          Setting up your SmartBag...
         </h3>
-        <p>You will be redirected automatically.</p>
+        <br />
+        <pre>You will be redirected automatically.</pre>
       </div>
     </div>
   )
