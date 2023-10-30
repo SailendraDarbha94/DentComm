@@ -11,13 +11,13 @@ const Page = () => {
   const origin = searchParams.get('origin')
 
   trpc.authCallback.useQuery(undefined, {
-    onSuccess: ({ success }:any) => {
+    onSuccess: ({ success }) => {
       if (success) {
         // user is synced to db
         router.push(origin ? `/${origin}` : '/dashboard')
       }
     },
-    onError: (err:any) => {
+    onError: (err) => {
       if (err.data?.code === 'UNAUTHORIZED') {
         router.push('/sign-in')
       }
@@ -31,10 +31,9 @@ const Page = () => {
       <div className='flex flex-col items-center gap-2'>
         <Loader2 className='h-8 w-8 animate-spin text-zinc-800' />
         <h3 className='font-semibold text-xl'>
-          Setting up your SmartBag...
+          Setting up your account...
         </h3>
-        <br />
-        <pre>You will be redirected automatically.</pre>
+        <p>You will be redirected automatically.</p>
       </div>
     </div>
   )

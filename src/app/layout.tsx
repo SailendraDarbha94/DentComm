@@ -1,37 +1,36 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { classNames } from "@/lib/utils";
-import Navbar from "@/components/Navbar";
-import Providers from "@/components/Providers";
+import Navbar from '@/components/Navbar'
+import Providers from '@/components/Providers'
+import { cn, constructMetadata } from '@/lib/utils'
+import { Inter } from 'next/font/google'
+import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] });
+import 'react-loading-skeleton/dist/skeleton.css'
+import 'simplebar-react/dist/simplebar.min.css'
 
-export const metadata: Metadata = {
-  title: "SmartBag",
-  description:
-    "AI service that allows you to organise and sort your digital life",
-};
+import { Toaster } from '@/components/ui/toaster'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata = constructMetadata()
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="light">
+    <html lang='en' className='light'>
       <Providers>
         <body
-          className={classNames(
-            "min-h-screen font-sans antialiased grainy",
+          className={cn(
+            'min-h-screen font-sans antialiased grainy',
             inter.className
-          )}
-        >
-          {/* <Toaster />*/}
+          )}>
+          <Toaster />
           <Navbar />
           {children}
         </body>
       </Providers>
     </html>
-  );
+  )
 }
