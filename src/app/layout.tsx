@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { NextUIProvider } from "@nextui-org/react";
 import NavBar from "@/components/NavBar";
+import { supabase } from "@/lib/supabase";
+import { useEffect, useState } from "react";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +19,31 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [user, setUser] = useState<any>(null)
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if(user){
+          console.log(user)
+          setUser(user)
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchUser();
+  }, []);
+
   return (
     <html lang="en">
       <body className="">
-        <NavBar />
-        <NextUIProvider>{children}</NextUIProvider>
+        <NextUIProvider>
+          <NavBar />
+          {children}
+        </NextUIProvider>
       </body>
     </html>
   );
