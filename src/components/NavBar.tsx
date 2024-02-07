@@ -3,30 +3,11 @@ import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenu
 import { useRouter } from "next/navigation";
 
 export default function NavBar() {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
-
   const router = useRouter()
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen}>
+    <Navbar>
       <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-        />
         <NavbarBrand>
           <p className="font-bold text-inherit hover:cursor-pointer" onClick={() => router.replace('/')}>KSDC</p>
         </NavbarBrand>
@@ -59,20 +40,6 @@ export default function NavBar() {
           </Button>
         </NavbarItem>
       </NavbarContent>
-      <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color="secondary"
-              className="w-full"
-              href={item.toLowerCase()}
-              size="lg"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
     </Navbar>
   );
 }
