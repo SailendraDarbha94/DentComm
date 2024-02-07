@@ -6,7 +6,8 @@ import { NextUIProvider } from "@nextui-org/react";
 import NavBar from "@/components/NavBar";
 import { supabase } from "@/lib/supabase";
 import { useEffect, useState } from "react";
-
+import AuthBar from "@/components/AuthBar";
+import { usePathname } from "next/navigation";
 // const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata: Metadata = {
@@ -19,29 +20,33 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [user, setUser] = useState<any>(null)
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if(user){
-          console.log(user)
-          setUser(user)
-        }
-      } catch (err) {
-        console.error(err);
+  const [user, setUser] = useState<any>(null);
+  const currentPath = usePathname();
+
+  const fetchUser = async () => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        console.log(user);
+        setUser(user);
       }
-    };
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
     fetchUser();
   }, []);
+
 
   return (
     <html lang="en">
       <body className="">
         <NextUIProvider>
-          <NavBar />
+          {currentPath == "/" || currentPath == "/auth/sign-up" || currentPath == "/auth/login" ? <NavBar /> : <AuthBar /> }
           {children}
         </NextUIProvider>
       </body>

@@ -50,7 +50,7 @@ export default function NavBar() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem className="">
           <Link href="/auth/login">Login</Link>
         </NavbarItem>
         <NavbarItem>
