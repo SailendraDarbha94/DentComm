@@ -15,20 +15,15 @@ export default function NavBar() {
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="/clinics">
-            Clinics
+          <Link href="/about" className="font-semibold underline">
+            More About Us
           </Link>
         </NavbarItem>
-        {/* <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
-          </Link>
-        </NavbarItem> */}
-        <NavbarItem>
-          <Link color="foreground" href="#">
+        {/* <NavbarItem>
+          <Link color="foreground" href="/faqs">
             FAQs
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="">

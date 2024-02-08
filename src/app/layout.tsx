@@ -41,12 +41,19 @@ export default function RootLayout({
     fetchUser();
   }, []);
 
-
   return (
     <html lang="en">
       <body className="">
         <NextUIProvider>
-          {currentPath == "/" || currentPath == "/auth/sign-up" || currentPath == "/auth/login" ? <NavBar /> : <AuthBar /> }
+          {currentPath == "/" ||
+          currentPath == "/auth/sign-up" ||
+          currentPath == "/about" ||
+          currentPath == "/faqs" ||
+          currentPath == "/auth/login" ? (
+            <NavBar />
+          ) : (
+            <AuthBar />
+          )}
           {children}
         </NextUIProvider>
       </body>
