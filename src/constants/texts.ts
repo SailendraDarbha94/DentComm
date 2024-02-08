@@ -5,6 +5,8 @@ export interface Offering {
     content: string;
 }
 
+export const  INTRO_TEXT:string = "This is a unique online portal where dentists can explore a wide array of job opportunities, tailoring their search to find roles that best fit their expertise and career aspirations. Simultaneously, it serves as an invaluable resource for clinic owners, granting them the ability to post job openings, attract qualified talent, and enhance the visibility of their clinics within the dental community."
+
 export const ABOUT_INTRO:string = `Welcome to [ksdc_community], the premier online community for dentists and clinics seeking professional opportunities and connections within the dental industry in Karnataka. Founded with a passion for fostering collaboration and growth, our platform serves as a bridge between talented dental professionals and reputable clinics, empowering them to thrive in their respective endeavors.`
 
 export const ABOUT_MISSION:string = "At [ksdc_community], our mission is to empower the global dental community by providing innovative solutions that foster collaboration, streamline operations, and advance professional growth. We strive to revolutionize the way dentists, clinics, and dental professionals connect, collaborate, and thrive, ultimately enhancing patient care and shaping the future of dentistry worldwide. By offering comprehensive clinic management tools, automated hiring workflows, and a dynamic networking platform, we aim to facilitate seamless interactions, inspire continuous learning, and drive excellence in dental practice. Together, we're building a vibrant ecosystem where expertise meets opportunity, transforming challenges into opportunities, and cultivating a community united by a shared passion for dental excellence."

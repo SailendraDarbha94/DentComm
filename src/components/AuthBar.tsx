@@ -72,9 +72,9 @@ export default function AuthBar() {
         <NavbarBrand>
           <p
             className="font-bold text-inherit hover:cursor-pointer"
-            onClick={() => router.replace("/")}
+            onClick={() => router.replace("/home")}
           >
-            KSDC
+            HOME
           </p>
         </NavbarBrand>
       </NavbarContent>
