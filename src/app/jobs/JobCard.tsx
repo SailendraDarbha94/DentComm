@@ -36,7 +36,7 @@ const JobCard = ({ params }: any) => {
   }, []);
 
   return (
-    <Card className="w-[98%] md:w-1/2 mx-auto">
+    <Card className="w-[98%] md:w-2/3 lg:w-1/2 mx-auto">
       <CardHeader className="flex gap-3">
         {/* <Image
           alt="nextui logo"

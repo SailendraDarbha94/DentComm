@@ -1,21 +1,72 @@
-"use client"
-
-import { useState } from "react"
+"use client";
+import Link from "next/link";
+import ClinicsList from "@/components/ClinicsList";
+import { supabase } from "@/lib/supabase";
+import { Spinner, Image, Spacer, Button } from "@nextui-org/react";
+import React,{ useEffect, useState } from "react";
 
 const Page = () => {
-
-    const [clinic, setClinic] = useState<any>(null)
-    const [loading, setLoading] = useState<boolean>(false)
-
-    async function fetchAssociatedClinics() {
-        console.log("have to fetch user linked clinics")
+  const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<any>(null);
+  const fetchUser = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.getUser();
+      if (error) {
+        throw error;
+      }
+      if (data) {
+        console.log(data?.user);
+        setUser(data?.user);
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
     }
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
-    return (
-        <div>
-            clinic dashboard
+  return (
+    <div>
+      clinic dashboard
+      <div className="flex flex-wrap">
+        <div className="w-full p-2 md:w-1/2 bg-red-100">
+          {loading ? (
+            <Spinner size="lg" />
+          ) : user ? (
+            <div className="bg-blue-100 flex flex-col items-center justify-around rounded-lg p-2">
+              <Image
+                alt="dentist"
+                className="mx-auto"
+                height={200}
+                src="/dentist.png"
+                width={200}
+              />
+              <Spacer y={2} />
+              <p className="font-semibold">{user.email}</p>
+              <Spacer y={2} />
+              <Button 
+                as={Link}
+                href="/register"
+                variant="ghost"
+                color="secondary"
+              >
+                Register New Clinic
+              </Button>
+            </div>
+          ) : (
+            <p>User not found</p>
+          )}
         </div>
-    )
-}
+        <div className="w-full p-2 md:w-1/2 bg-red-300">
+            <ClinicsList props={user} />
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default Page
+export default Page;
