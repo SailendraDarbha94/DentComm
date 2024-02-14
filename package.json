@@ -9,14 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.2",
     "@nextui-org/react": "^2.2.9",
-    "framer-motion": "^11.0.3",
     "@supabase/supabase-js": "^2.39.3",
+    "framer-motion": "^11.0.3",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/google.maps": "^3.54.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
