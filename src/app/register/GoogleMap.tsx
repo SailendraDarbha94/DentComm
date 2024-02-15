@@ -35,6 +35,8 @@ const GoogleMap = ({ onAddressSelect }: { onAddressSelect: Function }) => {
       const autoComplete = new google.maps.places.Autocomplete(
         searchRef.current as HTMLInputElement,
         {
+          /* what's causing Google Places Autocomplete to exclude places like
+          'Royal Meenakshi Mall', which is an establishment and not a geocode */
           //types: ["geocode"],
           componentRestrictions: { country: "in" },
         }

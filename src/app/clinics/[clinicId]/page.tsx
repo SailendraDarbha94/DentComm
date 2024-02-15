@@ -1,4 +1,5 @@
 "use client";
+import PostJob from "@/components/PostJob";
 import { supabase } from "@/lib/supabase";
 import {
   Card,
@@ -58,12 +59,16 @@ const Page = ({ params }: { params: { clinicId: string } }) => {
       }
   }
 
+  async function hideForm() {
+    setPost(false)
+  }
+
   return (
-    <div className="flex w-full min-h-screen justify-center">
+    <div className="flex flex-wrap w-full min-h-screen justify-center">
       {clinic ? (
         <Card
           key={clinic.id}
-          className="w-[99%] min-h-96 max-h-fit shadow-lg my-1"
+          className="w-[99%] min-h-96 max-h-fit mx-auto shadow-lg my-1"
         >
           <CardHeader className="flex flex-wrap gap-3">
             <h1 className="text-2xl text-center w-full font-bold">
@@ -73,19 +78,21 @@ const Page = ({ params }: { params: { clinicId: string } }) => {
 
           <Divider />
           <Button
-            color="secondary"
+            color={post ? "warning" : "secondary"}
             onPress={() => setPost(!post)}
-            variant="flat"
+            variant={post ? "bordered" : "flat"}
             className="mx-auto my-2 text-center"
           >
-            Post a Job
+            {post ? "Hide Job Form" : "Post a Job"}
           </Button>
           {post ? (
-            <div>create a post job component</div>
+            <div className="">
+              <PostJob clinicId={clinicId} address={clinic?.address} hider={hideForm}   />
+            </div>
           ) : // <PostJob clinicId={clinicId} address={clinic.address}   />
           null}
           <Divider />
-          <CardBody>
+          <CardBody className="max-h-96">
             <div className="flex flex-wrap w-full justify-around">
               <div className="text-md m-1 bg-gray-300 rounded-2xl px-2 py-1 text-wrap text-default-500">
                 Address : {clinic.address ? clinic.address : "N/A"}
