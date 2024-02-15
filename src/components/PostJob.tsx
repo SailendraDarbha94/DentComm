@@ -1,5 +1,6 @@
 "use client";
 import { supabase } from "@/lib/supabase";
+import ToastContext from "@/lib/toastContext";
 
 import {
   Button,
@@ -24,9 +25,16 @@ const PostJob = ({ clinicId, address, hider }: any) => {
   const [title, setTitle] = useState<string>("");
 
   const router = useRouter();
-
+  const {toast} = useContext(ToastContext);
+  
   const createJob = async () => {
-    
+    if(!title){
+      toast({
+        message: "Please fill the form",
+        type: "error"
+      })
+      return
+    }
     try {
       const { data, error } = await supabase
         .from("jobs")
@@ -46,11 +54,19 @@ const PostJob = ({ clinicId, address, hider }: any) => {
         .select();
 
       if (data) {
-        //toast("Job Posted Successfully")
+        toast({
+          message: "Job Posted Successfully",
+          type: "success"
+        })
         console.log(data);
+        router.push('/home')
         hider();
       }
     } catch (err) {
+      toast({
+        message: "An error occured! Please try again later",
+        type: "error"
+      })
       console.error(err);
       hider();
     }
