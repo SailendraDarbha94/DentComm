@@ -4,10 +4,11 @@ import { NextUIProvider } from "@nextui-org/react";
 import NavBar from "@/components/NavBar";
 import { useEffect, useLayoutEffect, useState } from "react";
 import AuthBar from "@/components/AuthBar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import ToastContext from "@/lib/toastContext";
 import Toast, { ToastMessage } from "@/components/Toast";
+import { supabase } from "@/lib/supabase";
 
 export default function RootLayout({
   children,
@@ -24,6 +25,18 @@ export default function RootLayout({
     await console.log(params);
     await setIsVisible(true);
   };
+
+  const router = useRouter();
+  async function fetchUser() {
+    const { data, error} = await supabase.auth.getUser();
+    if(data.user){
+      router.push('/home')
+    }
+  }
+
+  useEffect(() => {
+    fetchUser()
+  },[])
 
   const [isVisible, setIsVisible] = useState(true);
   const [toastMessage, setToastMessage] = useState<string>("");

@@ -1,5 +1,7 @@
 "use client";
 import { supabase } from "@/lib/supabase";
+import ToastContext from "@/lib/toastContext";
+import { applyForJob } from "@/lib/utils";
 import {
   Card,
   CardHeader,
@@ -11,32 +13,55 @@ import {
   Chip,
   Button,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
 
 const JobCard = ({ params }: any) => {
-  const [clinicName, setClinicName] = useState<any>("");
-
-  useEffect(() => {
-    async function fetchClinicName() {
-      try {
-        const { data, error } = await supabase
-          .from("clinics")
-          .select("name")
-          .eq("id", params.id);
-        if (data) {
-          setClinicName(data[0].name);
-        } else {
-          setClinicName("N/A");
-        }
-      } catch (err) {
-        console.error(err);
-      }
+  const router = useRouter()
+  const {toast} = useContext(ToastContext)
+  async function fetchUser() {
+    const{data, error} = await supabase.auth.getUser()
+    if(data.user){
+      return data.user
+    } else {
+      return null
     }
-    fetchClinicName();
-  }, []);
+  }
+  // useEffect(() => {
 
-  return (
-    <Card className="w-[98%] md:w-2/3 lg:w-1/2 mx-auto">
+  // }, []);
+
+  const applyFoJo = async () => {
+    const user = await fetchUser()
+    if(user?.email){
+      const res = await applyForJob(params.id, user?.email)
+      if(res == 'applied'){
+        toast({
+          message: 'Job Applied Successfully',
+          type: 'success'
+        })
+      } else if(res == 'failed') {
+        toast({
+          message: 'An Error Occurred! Please try again later.',
+          type: 'error'
+        })
+      } else if(res == 'already'){
+        toast({
+          message: 'You have already applied for this Job.',
+          type: 'error'
+        })
+      }
+    } else {
+      toast({
+        message: 'User Not Found',
+        type: 'error'
+      })
+      router.push('/home')
+    }
+  }
+
+  return params.title ? (
+    <Card className="w-[98%] md:w-2/3 lg:w-1/2 mx-auto my-2">
       <CardHeader className="flex gap-3">
         {/* <Image
           alt="nextui logo"
@@ -79,7 +104,7 @@ const JobCard = ({ params }: any) => {
         </svg>
         <div className="flex flex-col">
           <p className="text-md">{params?.title}</p>
-          <p className="text-small text-default-500">Posted by {clinicName}</p>
+          <p className="text-small text-default-500">Posting At {params?.location}</p>
         </div>
       </CardHeader>
       <Divider />
@@ -106,13 +131,13 @@ const JobCard = ({ params }: any) => {
           Visit source code on GitHub.
         </Link> */}
         <div className="w-full">
-          <Button variant="flat" color="secondary" className="mx-auto block">
+          <Button onClick={applyFoJo} variant="flat" color="secondary" className="mx-auto block">
             Apply
           </Button>
         </div>
       </CardFooter>
     </Card>
-  );
+  ) : null;
 };
 
 export default JobCard;

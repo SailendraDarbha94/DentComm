@@ -31,13 +31,12 @@ const Page = () => {
 
   return (
     <div>
-      clinic dashboard
       <div className="flex flex-wrap">
-        <div className="w-full p-2 md:w-1/2 bg-red-100">
+        <div className="w-full p-2 md:w-1/2">
           {loading ? (
             <Spinner size="lg" />
           ) : user ? (
-            <div className="bg-blue-100 flex flex-col items-center justify-around rounded-lg p-2">
+            <div className="flex flex-col items-center justify-around rounded-lg p-2">
               <Image
                 alt="dentist"
                 className="mx-auto"
@@ -45,9 +44,9 @@ const Page = () => {
                 src="/dentist.png"
                 width={200}
               />
-              <Spacer y={2} />
+              <Spacer y={4} />
               <p className="font-semibold">{user.email}</p>
-              <Spacer y={2} />
+              <Spacer y={4} />
               <Button 
                 as={Link}
                 href="/register"
@@ -61,7 +60,7 @@ const Page = () => {
             <p>User not found</p>
           )}
         </div>
-        <div className="w-full p-2 md:w-1/2 bg-red-300">
+        <div className="w-full p-2 md:w-1/2">
             <ClinicsList props={user} />
         </div>
       </div>

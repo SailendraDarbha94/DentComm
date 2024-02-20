@@ -63,7 +63,7 @@ export default function AuthBar() {
     setLoading(false);
   }
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen}>
+    <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-slate-200 rounded-lg mt-2 shadow-md">
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -80,21 +80,21 @@ export default function AuthBar() {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
+        {/* <NavbarItem>
           <Link color="foreground" href="/dashboard">
             Dashboard
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
         {/* <NavbarItem isActive>
           <Link href="#" aria-current="page">
             Customers
           </Link>
         </NavbarItem> */}
-        <NavbarItem>
+        {/* <NavbarItem>
         <Link color="foreground" href="/clinics">
             Clinics
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
       </NavbarContent>
       <NavbarContent justify="end">
           <Button color="danger" variant="ghost" onClick={logout}>

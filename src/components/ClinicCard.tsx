@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 const ClinicCard = ({ params }: any) => {
   const router = useRouter();
   return (
-    <Card className="w-[98%] md:max-w-[90%] lg:max-w-[80%] mx-auto my-2">
+    <Card className="w-[98%] md:max-w-[90%] lg:max-w-[80%] mx-auto shadow-md my-2 hover:shadow-xl">
       <CardHeader className="flex gap-3">
         {/* <Image
           alt="nextui logo"

@@ -1,10 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import GoogleMap from "@/app/register/GoogleMap";
 import { Button, Input, Textarea } from "@nextui-org/react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { Coordinates } from "@/constants/interfaces";
+import ToastContext from "@/lib/toastContext";
 
 export default function Register({user}:any) {
   const [name, setName] = useState<string>("");
@@ -12,25 +13,25 @@ export default function Register({user}:any) {
   const [timings, setTimings] = useState<string>("");
   const [regNo, setRegNo] = useState<string>("");
   const [address, setAddress] = useState<string>("");
-  const [specialities, setSpecialities] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false)
   const [coords, setCoords] = useState<Coordinates>({
     lat: 0,
     lng: 0
   })
   const router = useRouter();
-  useEffect(() => {
-    async function userIsThere() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+  const {toast} = useContext(ToastContext);
+  // useEffect(() => {
+  //   async function userIsThere() {
+  //     const {
+  //       data: { user },
+  //     } = await supabase.auth.getUser();
 
-      if (!user) {
-        router.push("/auth");
-      }
-    }
-    userIsThere();
-  }, []);
+  //     if (!user) {
+  //       router.push("/auth");
+  //     }
+  //   }
+  //   userIsThere();
+  // }, []);
 
   const handleAddressChange = (newAddress: any) => {
     console.log(newAddress)
@@ -43,19 +44,22 @@ export default function Register({user}:any) {
       name: name,
       description: desc,
       timings: timings,
-      reg_num: regNo,
+      registration_number: regNo,
       coordinates: coords,
-      specialties: specialities,
       address: address,
-      user_id: user.id
+      creator: user.id
     };
-
+    console.log(obj)
     const { data, error } = await supabase
       .from("clinics")
       .insert([{...obj}])
       .select();
 
     if(error){
+      toast({
+        message: "An Error Occured, PLease Try Again Later!",
+        type: "error"
+      })
       setLoading(false)
       console.log(error)
       return
@@ -63,7 +67,11 @@ export default function Register({user}:any) {
 
     if(!error && data){
       setLoading(false)
-      router.push('/clinics')
+      toast({
+        message: "Clinic Registered Successfully",
+        type: "success"
+      })
+      router.push('/dashboards/clinic')
     }
     setLoading(false)
   }
@@ -98,15 +106,6 @@ export default function Register({user}:any) {
           placeholder=""
           onChange={(e) => setRegNo(e.target.value)}
         />
-        <Input
-          className="max-w-80 my-2"
-          name="specialities"
-          value={specialities}
-          type="text"
-          label="Specialities"
-          placeholder=""
-          onChange={(e) => setSpecialities(e.target.value)}
-        />
         <Textarea
           label="Description"
           onChange={(e) => setDesc(e.target.value)}
@@ -122,7 +121,7 @@ export default function Register({user}:any) {
           type="text"
           label="Address"
           placeholder="Provided by Google"
-          //onChange={(e) => setRegNo(e.target.value)}
+          onChange={(e) => setAddress(e.target.value)}
         />
       </div>
       <div className="w-full md:w-1/2 text-center">
