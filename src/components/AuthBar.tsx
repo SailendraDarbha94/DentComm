@@ -63,7 +63,10 @@ export default function AuthBar() {
     setLoading(false);
   }
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-slate-200 rounded-lg mt-2 shadow-md">
+    <Navbar
+      onMenuOpenChange={setIsMenuOpen}
+      className="bg-slate-200 rounded-lg w-[98%] mx-auto my-2 shadow-md"
+    >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -97,9 +100,16 @@ export default function AuthBar() {
         </NavbarItem> */}
       </NavbarContent>
       <NavbarContent justify="end">
-          <Button color="danger" variant="ghost" onClick={logout}>
-            {loading ? <Spinner /> : "Logout"}
-          </Button>
+        <Button
+          color="secondary"
+          variant="ghost"
+          onClick={() => router.push("/profile")}
+        >
+          {loading ? <Spinner /> : "Profile"}
+        </Button>
+        <Button color="danger" variant="ghost" onClick={logout}>
+          {loading ? <Spinner /> : "Logout"}
+        </Button>
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (
