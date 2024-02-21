@@ -28,9 +28,9 @@ export default function RootLayout({
 
   const router = useRouter();
   async function fetchUser() {
-    const { data, error} = await supabase.auth.getUser();
-    if(data.user){
-      router.push('/home')
+    const { data, error } = await supabase.auth.getUser();
+    if (data.user) {
+      router.push("/home");
     }
   }
 
@@ -57,17 +57,19 @@ export default function RootLayout({
       <body className="">
         <NextUIProvider>
           <ToastContext.Provider value={{ toast }}>
-            {currentPath == "/" ||
-            currentPath == "/auth/sign-up" ||
-            currentPath == "/about" ||
-            currentPath == "/faqs" ||
-            currentPath == "/auth/login" ? (
-              <NavBar />
-            ) : (
-              <AuthBar />
-            )}
-            {isVisible && <Toast type={toastType} message={toastMessage} />}
-            {children}
+            <div className="bg-slate-300 min-h-screen mt-[-8px] py-2">
+              {currentPath == "/" ||
+              currentPath == "/auth/sign-up" ||
+              currentPath == "/about" ||
+              currentPath == "/faqs" ||
+              currentPath == "/auth/login" ? (
+                <NavBar />
+              ) : (
+                <AuthBar />
+              )}
+              {isVisible && <Toast type={toastType} message={toastMessage} />}
+              {children}
+            </div>
           </ToastContext.Provider>
         </NextUIProvider>
       </body>

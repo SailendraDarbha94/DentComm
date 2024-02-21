@@ -16,6 +16,7 @@ import {
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import NewJobsList from "../NewJobsList";
 
 const Page = ({ params }: { params: { clinicId: string } }) => {
   const router = useRouter();
@@ -127,8 +128,8 @@ const Page = ({ params }: { params: { clinicId: string } }) => {
             />
           </Tab>
           <Tab key="jobs" title="View Jobs">
-            View Posted Jobs
-            <JobsList clinicId={clinicId} />
+            Posted Jobs
+            <NewJobsList clinicId={clinicId} />
           </Tab>
         </Tabs>
       ) : (
