@@ -1,6 +1,7 @@
 "use client";
 import ClinicCard from "@/components/ClinicCard";
 import { supabase } from "@/lib/supabase";
+import ToastContext from "@/lib/toastContext";
 import {
   Button,
   Card,
@@ -12,53 +13,103 @@ import {
   Spinner,
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const NewJobsList = ({ clinicId }: any) => {
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [user,setUser] = useState<any>(null)
-  console.log(clinicId);
+  //console.log(clinicId);
+  const { toast } = useContext(ToastContext);
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      setLoading(true);
-      try {
-        const id = await clinicId;
-        if (id) {
-          const { data: jobs, error } = await supabase
-            .from("jobs")
-            .select("*")
-            .eq("posted_by", clinicId);
-          if (jobs) {
-            console.log(jobs);
-            setJobs(jobs);
-            setLoading(false);
-          }
+  const fetchJobs = async () => {
+    setLoading(true);
+    try {
+      const id = await clinicId;
+      if (id) {
+        const { data: jobs, error } = await supabase
+          .from("jobs")
+          .select("*")
+          .eq("posted_by", clinicId);
+        if (jobs) {
+          toast({
+            message: "Jobs List Fetched",
+            type: "success",
+          });
+          setJobs(jobs);
+          setLoading(false);
         }
-      } catch (err) {
-        console.error(err);
-        setLoading(false);
       }
-    };
-    async function fetchUser() {
-      const { data, error} = await supabase.auth.getUser();
-      if(data.user){
-        setUser(data?.user)
-      }
+    } catch (err) {
+      toast({
+        message: "Error occured! Please try again later",
+        type: "error",
+      });
+      console.error(err);
+      setLoading(false);
     }
+  };
+
+  const deactivatePosting = async (params: any) => {
+    setLoading(true)
+    const { data, error } = await supabase
+      .from("jobs")
+      .update({ status: "inactive" })
+      .eq("id", params);
+    if (!error) {
+      toast({
+        message: "Job Posting Deactivated",
+        type: "success",
+      });
+      router.push(`/clinics/${clinicId}`);
+      setLoading(false)
+    }
+    if (error) {
+      console.error(error);
+      toast({
+        message: "Error occured! Please try again later",
+        type: "error",
+      });
+    }
+    setLoading(false)
+  };
+  const reactivatePosting = async (params: any) => {
+    setLoading(true)
+    const { data, error } = await supabase
+      .from("jobs")
+      .update({ status: "active" })
+      .eq("id", params);
+    if (!error) {
+      console.log(data);
+      toast({
+        message: "Job Posting ReActivated",
+        type: "success",
+      });
+      setLoading(false)
+      router.push(`/clinics/${clinicId}`);
+    }
+    if (error) {
+      console.error(error);
+      toast({
+        message: "Error occured! Please try again later",
+        type: "error",
+      });
+    }
+    setLoading(false)
+  };
+  useEffect(() => {
     fetchJobs();
-    fetchUser()
   }, [clinicId]);
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const fetchResume = async (params:string) => {
-    const {data} = await supabase.storage.from('resumes').getPublicUrl(`${params.split("@")[0]}}`)
-    if(data){
-      router.push(data.publicUrl.split('%')[0]) 
+  const fetchResume = async (params: string) => {
+    const { data } = await supabase.storage
+      .from("resumes")
+      .getPublicUrl(`${params.split("@")[0]}}`);
+    if (data) {
+      router.push(data.publicUrl.split("%")[0]);
     }
-  }
+  };
 
   return (
     <div className="w-full">
@@ -68,19 +119,12 @@ const NewJobsList = ({ clinicId }: any) => {
         </div>
       ) : jobs ? (
         jobs.map((params: any) => {
-          return params.title ? (
+          return params?.title ? (
             <Card
               key={params.id}
               className="w-[98%] md:w-2/3 lg:w-1/2 mx-auto my-2"
             >
               <CardHeader className="flex gap-3">
-                {/* <Image
-          alt="nextui logo"
-          height={40}
-          radius="sm"
-          src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
-          width={40}
-        /> */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="2em"
@@ -113,12 +157,32 @@ const NewJobsList = ({ clinicId }: any) => {
                     d="M32.806 27.363c.448.377.932.549 2.02.549h.55c.897 0 1.624-.728 1.624-1.627h0c0-.899-.727-1.627-1.624-1.627h-1.102a1.625 1.625 0 0 1-1.623-1.627h0c0-.899.727-1.627 1.623-1.627h.551c1.088 0 1.572.172 2.02.549M25.541 23.86c0-1.357 1.1-2.456 2.456-2.456h0c1.356 0 2.456 1.1 2.456 2.456v1.596c0 1.356-1.1 2.456-2.456 2.456h0a2.456 2.456 0 0 1-2.456-2.456m0 2.456v-9.824"
                   />
                 </svg>
-                <div className="flex flex-col">
+                <div className="flex flex-col items-start">
                   <p className="text-md">{params?.title}</p>
                   <p className="text-small text-default-500">
                     Posting At {params?.location}
                   </p>
                 </div>
+                {params?.status === "active" ? (
+                  <Button
+                    className="ml-auto"
+                    color="danger"
+                    variant="ghost"
+                    onClick={() => deactivatePosting(params?.id)}
+                  >
+                    De-Activate
+                  </Button>
+                ) : null}
+                {params?.status === "inactive" ? (
+                  <Button
+                    className="ml-auto"
+                    color="success"
+                    variant="ghost"
+                    onClick={() => reactivatePosting(params?.id)}
+                  >
+                    Re-Activate
+                  </Button>
+                ) : null}
               </CardHeader>
               <Divider />
               <CardBody>
@@ -136,33 +200,32 @@ const NewJobsList = ({ clinicId }: any) => {
               </CardBody>
               <Divider />
               <CardFooter>
-                {/* <Link
-          isExternal
-          showAnchorIcon
-          href="https://github.com/nextui-org/nextui"
-        >
-          Visit source code on GitHub.
-        </Link> */}
-                {/* <div className="w-full">
-                  <Button
-                    variant="flat"
-                    onClick={() => setShowAppls(!showAppls)}
-                    color="secondary"
-                    className="mx-auto block"
-                  >
-                    {showAppls ? "Hide List" : "View Applicants"}
-                  </Button>
-                </div> */}
-                  <div className="flex flex-wrap justify-evenly w-full">
-                    {params.applicants ? (
-                      params.applicants.map((applicant: any) => {
-                        return <Chip className="bg-blue-400 hover:cursor-pointer" onClick={() => fetchResume(applicant)} key={applicant}>{applicant}</Chip>;
-                      })
-                    ) : (
-                      <p>No Applications Received Yet</p>
-                    )}
-                  </div>
-
+                <div className="w-full">
+                  <h2 className="font-semibold text-lg text-center">
+                    Applicants
+                  </h2>
+                  {params.applicants ? (
+                    params.applicants.map((applicant: any) => {
+                      return (
+                        <div
+                          key={applicant}
+                          className="flex justify-between my-1 p-1 border-1 border-black rounded-lg"
+                        >
+                          <p>{applicant}</p>
+                          <Chip
+                            className="bg-blue-700 text-white hover:cursor-pointer"
+                            onClick={() => fetchResume(applicant)}
+                            key={applicant}
+                          >
+                            View Resume
+                          </Chip>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <p>No Applications Received Yet</p>
+                  )}
+                </div>
               </CardFooter>
             </Card>
           ) : null;

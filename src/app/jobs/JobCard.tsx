@@ -106,6 +106,7 @@ const JobCard = ({ params }: any) => {
           <p className="text-md">{params?.title}</p>
           <p className="text-small text-default-500">Posting At {params?.location}</p>
         </div>
+        <Chip className="ml-auto hover:bg-red-500 hover:text-white hover:cursor-pointer">status : {params?.status}</Chip>
       </CardHeader>
       <Divider />
       <CardBody>
@@ -131,7 +132,7 @@ const JobCard = ({ params }: any) => {
           Visit source code on GitHub.
         </Link> */}
         <div className="w-full">
-          <Button onClick={applyFoJo} variant="flat" color="secondary" className="mx-auto block">
+          <Button disabled={params?.status === "inactive"} onClick={applyFoJo} variant="flat" color={params?.status === "active" ? "secondary" : "danger"} className="mx-auto block">
             Apply
           </Button>
         </div>

@@ -1,27 +1,39 @@
 "use client";
 
 import { supabase } from "@/lib/supabase";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import JobCard from "./JobCard";
 import { Divider, Spacer, Spinner } from "@nextui-org/react";
+import ToastContext from "@/lib/toastContext";
 
 const Page = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [jobs, setJobs] = useState<any[]>([]);
+  const { toast } = useContext(ToastContext)
 
   async function fetchJobsList() {
     setLoading(true);
     try {
-      const { data: jobs, error } = await supabase.from("jobs").select("*");
+      const { data: jobs, error } = await supabase.from("jobs").select("*").eq('status', 'active');
       if (jobs) {
         setJobs(jobs);
         setLoading(false);
+        toast({
+          message: 'Jobs List Fetched',
+          type: 'success'
+        })
       }
     } catch (err) {
       console.error(err);
       setLoading(false);
+      toast({
+        message: "Error occured! Please try again later",
+        type: "error"
+      })
     }
   }
+
+
 
   useEffect(() => {
     fetchJobsList();
@@ -42,7 +54,7 @@ const Page = () => {
       ) : (
         jobs &&
         jobs.map((job: any) => {
-          return <JobCard key={job.id} params={job} />;
+        return <JobCard key={job.id} params={job} />;
         })
       )}
     </div>

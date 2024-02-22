@@ -2,7 +2,7 @@ import { Card, CardFooter, Image, Button, CardHeader } from "@nextui-org/react";
 import Link from "next/link";
 
 export default function LandingCard({ params }: any) {
-  console.log(params);
+  //console.log(params);
   return (
     <Card isFooterBlurred radius="lg" className="">
       <div className="flex justify-center w-full">

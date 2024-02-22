@@ -75,23 +75,24 @@ const UserCard = ({
       <Divider />
       <CardFooter>
         <div className="w-full">
-          <Button
-            className="block min-w-40 mx-auto my-2"
-            color="warning"
-            variant="flat"
-            onClick={() => updateUserRole(user?.id, "ADMIN")}
-          >
-            Update Role to Admin
-          </Button>
-          <Button
-            className="block mx-auto min-w-40 my-2"
-            color="warning"
-            variant="flat"
-            onClick={() => updateUserRole(user?.id, "CLINIC")}
-          >
-            Update Role to Clinic
-          </Button>
-          <Divider />
+          <div className="flex flex-col sm:flex-row">
+            <Button
+              className="block min-w-40 mx-auto my-2"
+              color="warning"
+              variant="flat"
+              onClick={() => updateUserRole(user?.id, "ADMIN")}
+            >
+              Update Role to Admin
+            </Button>
+            <Button
+              className="block mx-auto min-w-40 my-2"
+              color="warning"
+              variant="flat"
+              onClick={() => updateUserRole(user?.id, "CLINIC")}
+            >
+              Update Role to Clinic
+            </Button>
+          </div>
           <Button
             className="block mx-auto min-w-40 mt-4"
             color="danger"
