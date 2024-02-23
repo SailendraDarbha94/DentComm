@@ -13,10 +13,10 @@ import { supabase } from "@/lib/supabase";
 export default function RootLayout({
   children,
   props,
-}: Readonly<{
-  children: React.ReactNode;
+}:{
+  children:any
   props: any;
-}>) {
+}) {
   const currentPath = usePathname();
 
   const toast = async (params: ToastMessage) => {
