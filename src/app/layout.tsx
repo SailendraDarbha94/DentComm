@@ -11,12 +11,8 @@ import Toast, { ToastMessage } from "@/components/Toast";
 import { supabase } from "@/lib/supabase";
 
 export default function RootLayout({
-  children,
-  props,
-}:{
-  children:any
-  props: any;
-}) {
+  children
+}:any) {
   const currentPath = usePathname();
 
   const toast = async (params: ToastMessage) => {
