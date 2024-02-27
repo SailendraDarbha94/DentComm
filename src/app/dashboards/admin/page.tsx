@@ -274,7 +274,7 @@ const Page = () => {
                 color="secondary"
                 variant="flat"
                 className="my-2"
-                onClick={() => router.push('/maps/test')}
+                onClick={() => router.push('/maps')}
               >
                 Show Map View
               </Button>

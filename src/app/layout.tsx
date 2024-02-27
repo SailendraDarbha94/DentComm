@@ -27,7 +27,7 @@ export default function RootLayout({
     const { data, error } = await supabase.auth.getUser();
     if (data.user) {
       console.log("User Status : ", data)
-      router.push("/home");
+      //router.push("/home");
     }
   }
 

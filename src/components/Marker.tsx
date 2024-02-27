@@ -1,3 +1,4 @@
+import { Tooltip } from '@nextui-org/react'
 import { LatLngLiteral } from 'google-maps-react-markers'
 import React from 'react'
 
@@ -33,6 +34,7 @@ const Marker = ({
 }: MarkerProps) =>
 	lat && lng ? (
 		// eslint-disable-next-line @next/next/no-img-element, jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+		<Tooltip content={markerId}>
 		<img
             src={'/clinic.svg'}
 			className={className}
@@ -48,6 +50,7 @@ const Marker = ({
 			height={35}
 			{...props}
 		/>
+		</Tooltip>
 	) : null
 
 export default Marker
