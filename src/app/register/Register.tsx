@@ -6,8 +6,10 @@ import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { Coordinates } from "@/constants/interfaces";
 import ToastContext from "@/lib/toastContext";
+import { getLatLngObj } from "@/lib/utils";
 
 export default function Register({user}:any) {
+  const [manualAddress, setManualAddress] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
   const [timings, setTimings] = useState<string>("");
@@ -34,10 +36,10 @@ export default function Register({user}:any) {
   // }, []);
 
   const handleAddressChange = (newAddress: any) => {
-    console.log(newAddress)
     setAddress(newAddress.address);
     setCoords(newAddress.coords)
   };
+
   async function handleSubmit() {
     setLoading(true)
     const obj = {
@@ -45,11 +47,13 @@ export default function Register({user}:any) {
       description: desc,
       timings: timings,
       registration_number: regNo,
-      coordinates: coords,
+      coordinates: manualAddress ? await getLatLngObj(address) : coords,
       address: address,
       creator: user.id
     };
-    console.log(obj)
+
+    //console.log(obj)
+
     const { data, error } = await supabase
       .from("clinics")
       .insert([{...obj}])
@@ -114,7 +118,7 @@ export default function Register({user}:any) {
           className="max-w-90 my-2"
         />
         <Input
-          disabled
+          disabled={!manualAddress}
           className="w-full my-2"
           name="address"
           value={address}
@@ -123,9 +127,21 @@ export default function Register({user}:any) {
           placeholder="Provided by Google"
           onChange={(e) => setAddress(e.target.value)}
         />
+        <Button
+        color="primary"
+        variant="flat"
+        onClick={() => setManualAddress(true)}
+        >
+          Enter Address Manually
+        </Button>
       </div>
       <div className="w-full md:w-1/2 text-center">
-        <GoogleMap onAddressSelect={handleAddressChange} />
+        {manualAddress ? (
+          <p className="w-full text-center text-xl font-semibold">Please enter full address in the form</p>
+        ):(
+          <GoogleMap onAddressSelect={handleAddressChange} />
+        )
+        }
       </div>
       <div className="flex w-full justify-center items-center p-2">
         <Button color="secondary" variant="flat" onPress={handleSubmit} isDisabled={loading}>

@@ -26,7 +26,8 @@ export default function RootLayout({
   async function fetchUser() {
     const { data, error } = await supabase.auth.getUser();
     if (data.user) {
-      router.push("/home");
+      console.log("User Status : ", data)
+      //router.push("/home");
     }
   }
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function LandingCard({ params }: any) {
   //console.log(params);
   return (
-    <Card isFooterBlurred radius="lg" className="">
+    <Card isFooterBlurred radius="lg" className="my-2">
       <div className="flex justify-center w-full">
         <Image
           alt={params?.alt}
