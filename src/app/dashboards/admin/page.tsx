@@ -20,6 +20,7 @@ import { supabase } from "@/lib/supabase";
 import UserCard from "@/components/UserCard";
 import ToastContext from "@/lib/toastContext";
 import AllClinicsList from "@/components/AllClinicsList";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -147,6 +148,7 @@ const Page = () => {
     }
   }
 
+  const router = useRouter()
   return (
     <div className="w-full text-center">
       <Tabs aria-label="options">
@@ -267,6 +269,14 @@ const Page = () => {
                 }}
               >
                 Show All Clinics
+              </Button>
+              <Button
+                color="secondary"
+                variant="flat"
+                className="my-2"
+                onClick={() => router.push('/maps/test')}
+              >
+                Show Map View
               </Button>
               <Button
                 color="secondary"
