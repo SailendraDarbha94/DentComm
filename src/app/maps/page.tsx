@@ -52,24 +52,25 @@ const Page = () => {
       name: "AMC",
     },
   ];
-
+  const [clinics, setClinics] = useState<any>(null);
   const fetchClinics = async () => {
     try {
-        const {data} = await supabase.from("clinics").select("*")
-        if(data){
-            console.log(data)
-        }
+      const { data } = await supabase.from("clinics").select("*");
+      if (data) {
+        console.log(data);
+        setClinics(data);
+      }
     } catch (err) {
-        console.error(err)
+      console.error(err);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchClinics()
-  },[])
+    fetchClinics();
+  }, []);
 
   return (
-    <>
+    <div className="rounded-md px-2 max-h-screen">
       {/* {mapReady && <div>Map is ready. See for logs in developer console.</div>} */}
       <GoogleMap
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
@@ -80,22 +81,23 @@ const Page = () => {
         onGoogleApiLoaded={onGoogleApiLoaded}
         onChange={(map) => console.log("Map moved", map)}
       >
-        {coordinates.map(({ lat, lng, name }, index) => (
-          <Marker
-            className="w-6 h-6 bg-black rounded-md hover:cursor-pointer"
-            key={index}
-            lat={lat}
-            lng={lng}
-            markerId={name}
-            onClick={onMarkerClick} // you need to manage this prop on your Marker component!
-            draggable={false}
-            // onDragStart={(e, { latLng }) => {}}
-            // onDrag={(e, { latLng }) => {}}
-            // onDragEnd={(e, { latLng }) => {}}
-          />
-        ))}
+        {clinics &&
+          clinics.map((item:any, index:any) => (
+            <Marker
+              className="w-6 h-6 bg-black rounded-md hover:cursor-pointer"
+              key={index}
+              lat={item?.coordinates?.lat}
+              lng={item?.coordinates?.lng}
+              markerId={item?.name}
+              onClick={onMarkerClick} // you need to manage this prop on your Marker component!
+              draggable={false}
+              // onDragStart={(e, { latLng }) => {}}
+              // onDrag={(e, { latLng }) => {}}
+              // onDragEnd={(e, { latLng }) => {}}
+            />
+          ))}
       </GoogleMap>
-    </>
+    </div>
   );
 };
 
