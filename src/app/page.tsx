@@ -1,7 +1,9 @@
+import MyLocation from "@/components/MyLocation";
 import { ABOUT_JOIN_US, ABOUT_MISSION } from "@/constants/texts";
 import { Button, Divider, Spacer } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
+import './globals.css'
 
 export default function Home() {
   return (
@@ -17,7 +19,7 @@ export default function Home() {
           />
         </div>
         <div className="w-full p-4 md:w-1/2">
-          <p className="font-semibold text-md text-justify my-2 shadow-md shadow-black rounded-lg p-2">
+          <p className="newer font-semibold text-md text-justify my-2 rounded-lg p-2">
             We help talented Dentists find their next work opportunity and we connect Clinics with the right talent-pool.
           </p>
           <Link

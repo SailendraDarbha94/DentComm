@@ -16,6 +16,11 @@
   } */
 }
 
+.newer {
+  box-shadow: 0 0 4px 6px #C0C2C9;
+  
+}
+
 body {
   /* color: rgb(var(--foreground-rgb));
   background: linear-gradient(
