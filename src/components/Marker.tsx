@@ -24,11 +24,8 @@ const Marker = ({
 	markerId,
 	onClick,
 	draggable,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onDrag,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onDragEnd,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onDragStart,
 	...props
 }: MarkerProps) =>
