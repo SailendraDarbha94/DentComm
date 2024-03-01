@@ -58,3 +58,15 @@ export const getLatLngObj = async (params: string) => {
 
   return obj;
 };
+
+export const isResumePresent = async (params: string) => {
+  const { data } = await supabase.storage
+    .from("resumes")
+    .createSignedUrl(`${params.split("@")[0]}`, 60);
+
+  if(data){
+    return true
+  } else {
+    return false
+  }
+};

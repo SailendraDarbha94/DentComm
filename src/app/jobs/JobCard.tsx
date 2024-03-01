@@ -1,7 +1,7 @@
 "use client";
 import { supabase } from "@/lib/supabase";
 import ToastContext from "@/lib/toastContext";
-import { applyForJob } from "@/lib/utils";
+import { applyForJob, isResumePresent } from "@/lib/utils";
 import {
   Card,
   CardHeader,
@@ -17,48 +17,55 @@ import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 const JobCard = ({ params }: any) => {
-  const router = useRouter()
-  const {toast} = useContext(ToastContext)
+  const [isResumeUploaded, setResumeUploaded] = useState<boolean>(false);
+  const [user, setUser] = useState<any>(null)
+  const router = useRouter();
+  const { toast } = useContext(ToastContext);
   async function fetchUser() {
-    const{data, error} = await supabase.auth.getUser()
-    if(data.user){
-      return data.user
-    } else {
-      return null
+    const { data, error } = await supabase.auth.getUser();
+    if (data?.user && data?.user?.email) {
+      setUser(data?.user)
+      const res = await isResumePresent(data?.user?.email);
+      setResumeUploaded(res)
     }
   }
-  // useEffect(() => {
-
-  // }, []);
+  useEffect(() => {
+    fetchUser()
+  }, []);
 
   const applyFoJo = async () => {
-    const user = await fetchUser()
-    if(user?.email){
-      const res = await applyForJob(params.id, user?.email)
-      if(res == 'applied'){
+
+    if (user?.email) {
+      const res = await applyForJob(params.id, user?.email);
+      if (res == "applied") {
         toast({
-          message: 'Job Applied Successfully',
-          type: 'success'
-        })
-      } else if(res == 'failed') {
+          message: "Job Applied Successfully",
+          type: "success",
+        });
+      } else if (res == "failed") {
         toast({
-          message: 'An Error Occurred! Please try again later.',
-          type: 'error'
-        })
-      } else if(res == 'already'){
+          message: "An Error Occurred! Please try again later.",
+          type: "error",
+        });
+      } else if (res == "already") {
         toast({
-          message: 'You have already applied for this Job.',
-          type: 'error'
-        })
+          message: "You have already applied for this Job.",
+          type: "error",
+        });
+      } else if (res === "called") {
+        toast({
+          message: "Unknown Error Occured! We are looking into it.",
+          type: "error",
+        });
       }
     } else {
       toast({
-        message: 'User Not Found',
-        type: 'error'
-      })
-      router.push('/home')
+        message: "User Not Found",
+        type: "error",
+      });
+      router.push("/home");
     }
-  }
+  };
 
   return params.title ? (
     <Card className="w-[98%] md:w-2/3 mx-auto my-2">
@@ -104,9 +111,13 @@ const JobCard = ({ params }: any) => {
         </svg>
         <div className="flex flex-col">
           <p className="text-md">{params?.title}</p>
-          <p className="text-small text-default-500">Posting At {params?.location}</p>
+          <p className="text-small text-default-500">
+            Posting At {params?.location}
+          </p>
         </div>
-        <Chip className="ml-auto hover:bg-red-500 hover:text-white hover:cursor-pointer">status : {params?.status}</Chip>
+        <Chip className="ml-auto hover:bg-blue-700 hover:text-white">
+          status : {params?.status}
+        </Chip>
       </CardHeader>
       <Divider />
       <CardBody>
@@ -132,9 +143,22 @@ const JobCard = ({ params }: any) => {
           Visit source code on GitHub.
         </Link> */}
         <div className="w-full">
-          <Button disabled={params?.status === "inactive"} onClick={applyFoJo} variant="flat" color={params?.status === "active" ? "secondary" : "danger"} className="mx-auto block">
-            Apply
-          </Button>
+          {isResumeUploaded ? (
+            <Button
+              disabled={params?.status === "inactive"}
+              onClick={applyFoJo}
+              variant="flat"
+              color={params?.status === "active" ? "secondary" : "danger"}
+              className="mx-auto block"
+            >
+              Apply
+            </Button>
+          ) : (
+            <p className="w-full text-lg underline text-center p-4 font-serif">
+              Please upload your resume in your profile section to enable job
+              applications
+            </p>
+          )}
         </div>
       </CardFooter>
     </Card>

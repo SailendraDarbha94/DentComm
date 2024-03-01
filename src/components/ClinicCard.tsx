@@ -56,8 +56,8 @@ const ClinicCard = ({ params }: any) => {
           <path fill="#99AAB5" d="M26 10H10a2 2 0 0 0-2 2h20a2 2 0 0 0-2-2" />
         </svg>
         <div className="flex flex-col">
-          <p className="text-md">{params?.name}</p>
-          <p className="text-small text-default-500">
+          <p className="text-md text-left">{params?.name}</p>
+          <p className="text-small text-default-500 text-left">
             {params?.registration_number}
           </p>
         </div>

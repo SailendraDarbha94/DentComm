@@ -5,10 +5,10 @@ import React, { useContext, useEffect, useState } from "react";
 import JobCard from "./JobCard";
 import { Divider, Input, Spacer, Spinner } from "@nextui-org/react";
 import ToastContext from "@/lib/toastContext";
+import { isResumePresent } from "@/lib/utils";
 
 const Page = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [clinicIds, setClinicIds] = useState<any[]>([]);
   const [jobs, setJobs] = useState<any[]>([]);
   const { toast } = useContext(ToastContext);
   const searchRef = React.useRef<HTMLInputElement>(null);
@@ -39,8 +39,8 @@ const Page = () => {
   }
 
   async function filterJobsList(params: any) {
-    setLoading(true)
-    console.log("params",params);
+    setLoading(true);
+    console.log("params", params);
     try {
       const { data } = await supabase.from("clinics").select("id, coordinates");
       if (data) {
@@ -59,19 +59,24 @@ const Page = () => {
           //return console.log("for this clinic id", clinic.id, "whether it is in bounds", );
         });
 
-        const filteredClinics = await clinicsWithinRadius.filter((number) => number !== undefined)
-        console.log("filtered clinics", filteredClinics)
-        const {data:filteredJobs} = await supabase.from('jobs').select('*').in('posted_by',filteredClinics)
+        const filteredClinics = await clinicsWithinRadius.filter(
+          (number) => number !== undefined
+        );
+        console.log("filtered clinics", filteredClinics);
+        const { data: filteredJobs } = await supabase
+          .from("jobs")
+          .select("*")
+          .in("posted_by", filteredClinics);
         //console.log(filteredJobs)
-        if(filteredJobs){
-          setJobs(filteredJobs)
+        if (filteredJobs) {
+          setJobs(filteredJobs);
         } else {
           toast({
             message: "Error occured! Please try again later",
             type: "error",
           });
         }
-        setLoading(false)
+        setLoading(false);
       }
     } catch (err) {
       toast({
@@ -79,7 +84,7 @@ const Page = () => {
         type: "error",
       });
       console.error(err);
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -126,23 +131,29 @@ const Page = () => {
   };
 
   useEffect(() => {
+    const reese = async () => {
+      const res = await isResumePresent("darbhasailu@gmail.com")
+      console.log("res",res);
+    };
+    reese()
     initMap();
     fetchJobsList();
   }, []);
 
   return (
     <div className="min-h-screen p-2 md:p-10">
-      <h1 className="w-full text-center text-2xl font-bold">
+      {/* <h1 className="w-full text-center text-2xl font-bold">
         Find Your Next Career Opportunity
-      </h1>
+      </h1> */}
       <Input
         //isRequired
         ref={searchRef}
         type="text"
-        label=""
+        label="Search By Area"
+        placeholder=""
         //onChange={(e) => console.log(e.target.value)}
         defaultValue=""
-        className="w-8/12"
+        className="w-10/12 md:w-8/12 mx-auto"
       />
       <Spacer y={3} />
       <Divider />
