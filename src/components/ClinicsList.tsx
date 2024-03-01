@@ -1,7 +1,7 @@
 "use client";
 import ClinicCard from "@/components/ClinicCard";
 import { supabase } from "@/lib/supabase";
-import { Spinner } from "@nextui-org/react";
+import { Spacer, Spinner } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
 const ClinicsList = ({ props }: any) => {
@@ -43,11 +43,11 @@ const ClinicsList = ({ props }: any) => {
           return <ClinicCard params={clinic} key={clinic.id} />;
         })
       ) : (
-        <>
-          <p>No Clinics Found,</p>
-          <br />
-          <p> Please Register a Clinic</p>
-        </>
+        <div className="w-full">
+          <p className="text-lg text-center font-serif">No Clinics Found,</p>
+          <Spacer y={4} />
+          <p className="text-lg text-center font-serif">Please Register your Clinics to utilise our services</p>
+        </div>
       )}
     </div>
   );
