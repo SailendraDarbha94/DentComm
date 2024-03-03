@@ -24,7 +24,7 @@ export default function Home() {
           </p>
           <Link
           href={'/about'}
-          className="md:hidden x-auto block text-center my-3 hover:cursor-pointer underline text-blue-600"
+          className="md:hidden x-auto uppercase block text-center my-4 hover:cursor-pointer underline text-blue-600"
           >
             More About Us
           </Link>
