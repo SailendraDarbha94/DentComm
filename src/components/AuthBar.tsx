@@ -65,7 +65,7 @@ export default function AuthBar() {
   return (
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
-      className="bg-slate-200 rounded-lg w-[98%] mx-auto my-2 shadow-md"
+      className=""
     >
       <NavbarContent>
         <NavbarMenuToggle

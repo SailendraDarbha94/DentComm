@@ -9,6 +9,7 @@ import React from "react";
 import ToastContext from "@/lib/toastContext";
 import Toast, { ToastMessage } from "@/components/Toast";
 import { supabase } from "@/lib/supabase";
+import PageNavbar from "@/components/PageNavbar";
 
 export default function RootLayout({
   children
@@ -60,7 +61,7 @@ export default function RootLayout({
               currentPath == "/about" ||
               currentPath == "/faqs" ||
               currentPath == "/auth/login" ? (
-                <NavBar />
+                <PageNavbar />
               ) : (
                 <AuthBar />
               )}

@@ -1,13 +1,16 @@
-import MyLocation from "@/components/MyLocation";
+
 import { ABOUT_JOIN_US, ABOUT_MISSION } from "@/constants/texts";
 import { Button, Divider, Spacer } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 import './globals.css'
+import { HeroParallax } from "@/components/ui/hero-parallax";
+import { products } from "@/constants/constants";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-1">
+      <HeroParallax products={products} />
       <div className="flex flex-wrap">
         <div className="w-full md:w-1/2">
           <Image
