@@ -9,7 +9,18 @@ import { products } from "@/constants/constants";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-1">
-      <HeroParallax products={products} />
+      <div className="block md:hidden max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
+        <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
+          One-Stop Solution <br /> For Dentists & Clinics Alike
+        </h1>
+        <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
+          Whether you&apos;re a Dentist looking for Job Opportunities or a
+          Clinic looking for Talented Dentists, we&apos;ve got you covered
+        </p>
+      </div>
+      <div className="hidden md:block">
+        <HeroParallax products={products} />
+      </div>
       <div className="flex flex-wrap">
         {/* <div className="w-full md:w-1/2">
           <Image
@@ -37,13 +48,13 @@ export default function Home() {
           </h1>
           <Spacer y={4} />
           <div className="w-full flex flex-wrap items-center justify-between">
-          <Image
-            width={240}
-            height={240}
-            alt="landing image"
-            src={"/dentist.png"}
-            className="rounded-md md:w-1/4 mx-auto"
-          />
+            <Image
+              width={240}
+              height={240}
+              alt="landing image"
+              src={"/dentist.png"}
+              className="rounded-md md:w-1/4 mx-auto"
+            />
             <p className="w-full md:w-2/3 text-xl">{ABOUT_MISSION}</p>
           </div>
           <Spacer y={4} />
@@ -53,7 +64,7 @@ export default function Home() {
             Join Us
           </h1> */}
         </div>
-        <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
+        <div className="hidden md:block max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
           <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
             One-Stop Solution <br /> For Dentists & Clinics Alike
           </h1>
