@@ -59,7 +59,7 @@ export const products = [
     title: "Council",
     link: "#",
     thumbnail:
-      "/about.png",
+      "/toothless.png",
   },
   {
     title: "Dentists",

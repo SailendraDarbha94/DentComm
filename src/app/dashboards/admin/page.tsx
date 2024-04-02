@@ -150,7 +150,7 @@ const Page = () => {
 
   const router = useRouter()
   return (
-    <div className="w-full text-center">
+    <div className="w-full text-center pt-8 min-h-screen">
       <Tabs aria-label="options">
         <Tab key="users" title="User Operations">
           <div className="w-full p-2">

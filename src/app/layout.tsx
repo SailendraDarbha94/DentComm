@@ -32,9 +32,9 @@ export default function RootLayout({
     }
   }
 
-  useEffect(() => {
-    fetchUser()
-  },[])
+  // useEffect(() => {
+  //   fetchUser()
+  // },[])
 
   const [isVisible, setIsVisible] = useState(true);
   const [toastMessage, setToastMessage] = useState<string>("");
