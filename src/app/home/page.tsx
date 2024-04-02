@@ -68,7 +68,7 @@ const Page = () => {
         <Spacer y={4} />
         <Divider />
         <Spacer y={4} />
-        <p>{INTRO_TEXT}</p>
+        <p className="font-light p-4 text-xl leading-relaxed">{INTRO_TEXT}</p>
       </div>
     </div>
   );

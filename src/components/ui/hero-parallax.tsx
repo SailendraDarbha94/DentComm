@@ -108,9 +108,8 @@ const Header = () => {
         Networking <br /> Tailored for Dentists
       </h1>
       <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
-        We build beautiful products with the latest technologies and frameworks.
-        We are a team of passionate developers and designers that love to build
-        amazing products.
+        This is a platform where dentists and clinics can meet their own
+        requirements on their own terms.
       </p>
     </div>
   );
