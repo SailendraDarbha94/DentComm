@@ -21,6 +21,7 @@ export default function Home() {
       <div className="hidden md:block">
         <HeroParallax products={products} />
       </div>
+      <Spacer y={40} />
       <div className="flex flex-wrap">
         {/* <div className="w-full md:w-1/2">
           <Image

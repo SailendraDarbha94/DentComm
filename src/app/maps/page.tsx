@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase";
 import { getLatLngObj } from "@/lib/utils";
 import { Spinner, Tooltip } from "@nextui-org/react";
 import GoogleMap from "google-maps-react-markers";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
 const Page = () => {
@@ -16,12 +17,25 @@ const Page = () => {
     setMapReady(true);
   };
 
+  const router = useRouter()
+  const filterClinicsAndNavigate = async (params:string) => {
+    let {data:clinics, error} = await supabase.from("clinics").select().eq("name", params)
+    if(clinics){
+      console.log(clinics[0])
+      router.push(`/clinics/${clinics[0].id}`)
+    }
+  }
+
   const onMarkerClick = (e: any, { markerId, lat, lng }: any) => {
-    console.log("This is ->", markerId);
+    console.log("These coordinates ->", lat, lng);
+
+
 
     // inside the map instance you can call any google maps method
     mapRef.current.setCenter({ lat, lng });
     // ref. https://developers.google.com/maps/documentation/javascript/reference?hl=it
+
+    filterClinicsAndNavigate(markerId)
   };
 
   const mapOptions = {
