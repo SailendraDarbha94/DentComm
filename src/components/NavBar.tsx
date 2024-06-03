@@ -13,18 +13,18 @@ export default function NavBar() {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      {/* <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
           <Link href="/about" className="font-semibold underline">
             More About Us
           </Link>
         </NavbarItem>
-        {/* <NavbarItem>
+        <NavbarItem>
           <Link color="foreground" href="/faqs">
             FAQs
           </Link>
-        </NavbarItem> */}
-      </NavbarContent>
+        </NavbarItem>
+      </NavbarContent> */}
       <NavbarContent justify="end">
         <NavbarItem className="">
           <Link href="/auth/login">Login</Link>

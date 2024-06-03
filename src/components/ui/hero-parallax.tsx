@@ -103,13 +103,13 @@ export const HeroParallax = ({
 
 const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
+    <div className="max-w-7xl font-nunito relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
       <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
-        Networking <br /> Tailored for Dentists
+        Find Clinics<br />
+        Near Your Home
       </h1>
       <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
-        This is a platform where dentists and clinics can meet their own
-        requirements on their own terms.
+        You can filter the job posts based on location and search for clinics that hiring near you
       </p>
     </div>
   );

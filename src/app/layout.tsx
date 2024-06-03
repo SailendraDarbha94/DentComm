@@ -10,6 +10,7 @@ import ToastContext from "@/lib/toastContext";
 import Toast, { ToastMessage } from "@/components/Toast";
 import { supabase } from "@/lib/supabase";
 import PageNavbar from "@/components/PageNavbar";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({
   children
@@ -55,7 +56,7 @@ export default function RootLayout({
       <body className="">
         <NextUIProvider>
           <ToastContext.Provider value={{ toast }}>
-            <div className="bg-slate-300 min-h-screen mt-[-8px] py-2">
+            <div className="min-h-screen mt-[-8px] py-2">
               {currentPath == "/" ||
               currentPath == "/auth/sign-up" ||
               currentPath == "/about" ||
@@ -67,6 +68,7 @@ export default function RootLayout({
               )}
               {isVisible && <Toast type={toastType} message={toastMessage} />}
               {children}
+              <Footer />
             </div>
           </ToastContext.Provider>
         </NextUIProvider>

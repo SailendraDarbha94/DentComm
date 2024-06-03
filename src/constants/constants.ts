@@ -9,87 +9,87 @@ export const products = [
     title: "Karnatak",
     link: "#",
     thumbnail:
-      "/admin.png",
+      "/dentist.webp",
   },
   {
     title: "State",
     link: "#",
     thumbnail:
-      "/clinic.png",
+      "/clinic.webp",
   },
 
   {
     title: "Dental",
     link: "#",
     thumbnail:
-      "/dentist.png",
+      "/toothwalk.png",
   },
   {
     title: "Council",
     link: "#",
     thumbnail:
-      "/toothless.png",
+      "/dentist.webp",
   },
   {
     title: "KSDC",
     link: "#",
     thumbnail:
-      "/admin.png",
+      "/dentist.webp",
   },
 
   {
     title: "Karnataka",
     link: "#",
     thumbnail:
-      "/clinic.png",
+      "/clinic.webp",
   },
   {
     title: "State",
     link: "#",
     thumbnail:
-      "/dentist.png",
+      "/toothwalk.png",
   },
   {
     title: "Dental",
     link: "#",
     thumbnail:
-      "/about.png",
+      "/clinic.webp",
   },
   {
     title: "Council",
     link: "#",
     thumbnail:
-      "/toothless.png",
+      "/dentist.webp",
   },
   {
-    title: "Dentists",
+    title: "toothwalks",
     link: "#",
     thumbnail:
-      "/dentist.png",
+      "/toothwalk.png",
   },
 
   {
     title: "Interns",
     link: "#",
     thumbnail:
-      "/admin.png",
+      "/dentist.webp",
   },
   {
     title: "Clinics",
     link: "#",
     thumbnail:
-      "/toothless.png",
+      "/toothwalk.png",
   },
   {
     title: "AI",
     link: "#",
     thumbnail:
-      "/admin.png",
+      "/dentist.webp",
   },
   {
     title: "Coming Soon",
     link: "#",
     thumbnail:
-      "/clinic.png",
+      "/clinic.webp",
   },
 ];

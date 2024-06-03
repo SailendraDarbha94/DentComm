@@ -29,7 +29,7 @@ let params = {
   },
   third: {
     alt: "admin",
-    img: "/admin.png",
+    img: "/adminbgr.png",
     txt: "For Admins",
     btn: "Dashboard",
     link: "/dashboards/admin",
