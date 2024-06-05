@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem} from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
-export default function NavBar() {
+const NavBar = () => {
   const router = useRouter()
 
   return (

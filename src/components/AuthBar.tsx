@@ -12,13 +12,14 @@ import {
   NavbarMenuItem,
   Spinner,
 } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 export default function AuthBar() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
+  const path = usePathname();
   const fetchUser = async () => {
     setLoading(true);
     try {
@@ -64,14 +65,14 @@ export default function AuthBar() {
   }
   return (
     <Navbar
-      onMenuOpenChange={setIsMenuOpen}
+      //onMenuOpenChange={setIsMenuOpen}
       className=""
     >
       <NavbarContent>
-        <NavbarMenuToggle
+        {/* <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
-        />
+        /> */}
         <NavbarBrand>
           <p
             className="font-bold text-inherit hover:cursor-pointer"
@@ -99,19 +100,21 @@ export default function AuthBar() {
           </Link>
         </NavbarItem> */}
       </NavbarContent>
-      <NavbarContent justify="end">
-        <Button
-          color="secondary"
-          variant="ghost"
-          onClick={() => router.push("/profile")}
-        >
-          {loading ? <Spinner /> : "Profile"}
-        </Button>
-        <Button color="danger" variant="ghost" onClick={logout}>
-          {loading ? <Spinner /> : "Logout"}
-        </Button>
-      </NavbarContent>
-      <NavbarMenu>
+      {path.includes("login") ? null : (
+        <NavbarContent justify="end">
+          <Button
+            color="secondary"
+            variant="ghost"
+            onClick={() => router.push("/profile")}
+          >
+            {loading ? <Spinner /> : "Profile"}
+          </Button>
+          <Button color="danger" variant="ghost" onClick={logout}>
+            {loading ? <Spinner /> : "Logout"}
+          </Button>
+        </NavbarContent>
+      )}
+      {/* <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
@@ -124,7 +127,7 @@ export default function AuthBar() {
             </Link>
           </NavbarMenuItem>
         ))}
-      </NavbarMenu>
+      </NavbarMenu> */}
     </Navbar>
   );
 }

@@ -1,15 +1,16 @@
 "use client";
 
 import { supabase } from "@/lib/supabase";
+import ToastContext from "@/lib/toastContext";
 import { Button, Input, Spinner } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
-export default function Page() {
+const Page = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
+  const { toast } = useContext(ToastContext);
   const router = useRouter();
 
   async function handleSubmit() {
@@ -20,16 +21,18 @@ export default function Page() {
       password: password,
     });
 
-    if (data) {
+    if (data.user && data.session) {
       console.log(data);
       setLoading(false);
+      toast({message: "User Logged In", type: "success"});
       router.push("/home");
     }
 
     if (error) {
-      console.log(error);
+      console.log(JSON.stringify(error));
       setLoading(false);
-      window.alert("An Error Occured! Please try again later");
+      toast({message: error.message, type: "error"});
+      //window.alert("An Error Occured! Please try again later");
     }
   }
 
@@ -70,3 +73,5 @@ export default function Page() {
     </div>
   );
 }
+
+export default Page

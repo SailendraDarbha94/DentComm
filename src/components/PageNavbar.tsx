@@ -7,7 +7,6 @@ import {
   NavbarItem,
   Link,
   Button,
-  Image,
 } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -18,7 +17,10 @@ export default function PageNavbar() {
     <Navbar>
       <NavbarContent>
         <NavbarBrand>
-          <p className="font-bold text-inherit hover:cursor-pointer" onClick={() => router.replace('/')}>KSDC</p>
+          <p className="font-bold font-nunito text-inherit hover:cursor-pointer flex items-center justify-center" onClick={() => router.replace('/')}>
+            <img src="/toothwalkbgr.png" alt="tooth" className="h-8 w-8" />
+            KSDC
+          </p>
         </NavbarBrand>
       </NavbarContent>
 
@@ -35,12 +37,12 @@ export default function PageNavbar() {
         </NavbarItem>
       </NavbarContent> */}
       <NavbarContent justify="end">
-        <NavbarItem className="">
+        {/* <NavbarItem className="">
           <Link href="/auth/login">Login</Link>
-        </NavbarItem>
+        </NavbarItem> */}
         <NavbarItem>
-          <Button as={Link} color="primary" href="/auth/sign-up" variant="flat">
-            Sign Up
+          <Button as={Link} color="secondary" href="/auth/home" variant="ghost" className="font-nunito">
+            Login
           </Button>
         </NavbarItem>
       </NavbarContent>

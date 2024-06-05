@@ -1,7 +1,6 @@
 "use client";
 import "./globals.css";
 import { NextUIProvider } from "@nextui-org/react";
-import NavBar from "@/components/NavBar";
 import { useEffect, useLayoutEffect, useState } from "react";
 import AuthBar from "@/components/AuthBar";
 import { usePathname, useRouter } from "next/navigation";
@@ -53,15 +52,15 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className="">
+      <body className="w-full">
         <NextUIProvider>
           <ToastContext.Provider value={{ toast }}>
-            <div className="min-h-screen mt-[-8px] py-2">
+            <div className="min-h-screen mt-[-8px] py-2 w-full">
               {currentPath == "/" ||
               currentPath == "/auth/sign-up" ||
               currentPath == "/about" ||
               currentPath == "/faqs" ||
-              currentPath == "/auth/login" ? (
+              currentPath == "/auth/home" ? (
                 <PageNavbar />
               ) : (
                 <AuthBar />

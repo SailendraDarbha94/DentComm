@@ -54,7 +54,7 @@ const Page = () => {
   return (
     <div className="m-2 min-h-screen p-10 rounded-lg shadow-xl">
       <div className="flex flex-wrap w-full">
-        <h1 className="w-full text-center text-4xl font-bold">
+        <h1 className="w-full text-center text-4xl font-bold font-nunito">
           Welcome to KSDC communities
         </h1>
         <Spacer y={2} />
@@ -68,7 +68,7 @@ const Page = () => {
         <Spacer y={4} />
         <Divider />
         <Spacer y={4} />
-        <p className="font-light p-4 text-xl leading-relaxed">{INTRO_TEXT}</p>
+        <p className="font-nunito p-4 text-xl leading-relaxed">{INTRO_TEXT}</p>
       </div>
     </div>
   );
